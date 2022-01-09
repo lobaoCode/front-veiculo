@@ -1,0 +1,80 @@
+<mat-card>
+  <mat-toolbar color="primary" class="toolbar_lista_veiculos">Lista de Veículos</mat-toolbar>
+
+  <button mat-raised-button color="primary" class="btn_filtro" (click)="findAll()">Todos</button>
+  <button mat-raised-button color="primary" class="btn_filtro" (click)="findNaoVendidos()">Não Vendidos</button>
+  <button mat-raised-button color="primary" class="btn_filtro" (click)="findSemana()">Última Semana</button>
+
+  <div *ngIf="veiculos$ | async as veiculos else loading">
+    <table mat-table [dataSource]="veiculos" class="mat-elevation-z8">
+
+      <!-- Id -->
+      <ng-container matColumnDef="_id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let veiculo"> {{ veiculo._id }} </td>
+      </ng-container>
+
+      <!-- Veiculo -->
+      <ng-container matColumnDef="veiculo">
+        <th mat-header-cell *matHeaderCellDef> Veículo </th>
+        <td mat-cell *matCellDef="let veiculo"> {{ veiculo.veiculo }} </td>
+      </ng-container>
+
+      <!-- Marca -->
+      <ng-container matColumnDef="marca">
+        <th mat-header-cell *matHeaderCellDef> Marca </th>
+        <td mat-cell *matCellDef="let veiculo"> {{ veiculo.marca }} </td>
+      </ng-container>
+
+      <!-- Ano -->
+      <ng-container matColumnDef="ano">
+        <th mat-header-cell *matHeaderCellDef> Ano </th>
+        <td mat-cell *matCellDef="let veiculo"> {{ veiculo.ano}} </td>
+      </ng-container>
+
+      <!-- Vendido -->
+      <ng-container matColumnDef="vendido">
+        <th mat-header-cell *matHeaderCellDef> Vendido </th>
+        <td mat-cell *matCellDef="let veiculo">
+          <div *ngIf="veiculo.vendido; else notSell">
+            <mat-icon>done</mat-icon>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Ações -->
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef> Ações </th>
+        <td mat-cell *matCellDef="let veiculo">
+          <button mat-icon-button (click)="editarVeiculo(veiculo)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteVeiculo(veiculo._id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button (click)="visualizarVeiculo(veiculo)">
+            <mat-icon>remove_red_eye</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <!-- Carregar o spinner -->
+  <ng-template #loading>
+    <div class="loading-spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+
+  <!-- Visualização de controle de venda -->
+  <ng-template #notSell>
+    <mat-icon>cancel</mat-icon>
+  </ng-template>
+
+</mat-card>
+
+<button mat-raised-button color="primary" class="btn_cadastrar" routerLink="/veiculos/cadastrar">Cadastrar</button>

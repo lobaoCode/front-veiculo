@@ -1,0 +1,31 @@
+<mat-card class="card_form_cadastrar">
+  <mat-card-title>Cadastrar</mat-card-title>
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill">
+      <mat-label>Modelo</mat-label>
+      <input matInput placeholder="Modelo" formControlName="veiculo">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Ano</mat-label>
+      <input matInput placeholder="Ano" formControlName="ano">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Marca</mat-label>
+      <select matNativeControl required formControlName="marca">
+        <option value="FORD">Ford</option>
+        <option value="RENAULT">Renault</option>
+        <option value="CHEVROLET">Chevrolet</option>
+        <option value="FIAT">Fiat</option>
+      </select>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Descrição</mat-label>
+      <textarea matInput formControlName="descricao"></textarea>
+    </mat-form-field>
+  </form>
+</mat-card>
+<button mat-raised-button color="primary" class="btn" (click)="saveVeiculo()">Cadastrar</button>
+<button mat-raised-button color="warn" class="btn" routerLink="/veiculos">Cancelar</button>
